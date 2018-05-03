@@ -1,3 +1,5 @@
+package mining;
+import data.Data;
 
 public class KMeansMiner {
 	private ClusterSet C;
@@ -5,6 +7,7 @@ public class KMeansMiner {
 	public KMeansMiner(int k) {
 		C=new ClusterSet(k);
 	}
+	
 	
 	public ClusterSet getC() {
 		return C;

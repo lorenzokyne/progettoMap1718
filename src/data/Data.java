@@ -1,11 +1,14 @@
+package data;
 import java.util.Random;
+
+import utility.ArraySet;
 
 public class Data {
 // Le visibilità di classi , attributi e metodi devono essere decise dagli studenti	
 	private Object data [][];
 	private int numberOfExamples;
 	private Attribute attributeSet[];
-	
+	private int distinctTuples;
 	
 	public Data(){
 		
@@ -132,6 +135,8 @@ public class Data {
 		data[13][2]="High";
 		data[13][3]="Strong";
 		data[13][4]="No";
+		
+		distinctTuples=countDistinctTuples();
 	}
 	
 	public int getNumberOfExamples(){
@@ -223,6 +228,24 @@ public class Data {
 			appoggio=appoggio+"\n";
 		}
 		return appoggio;
+	}
+	
+	private int countDistinctTuples() {
+		int cont=0;
+		for(int i=0;i<getNumberOfExamples();i++) {
+			if(!existTupla(i)) {
+				cont++;
+			}
+		}
+		return cont;
+	}
+	private boolean existTupla(int index) {
+		for(int i=0;i<index;i++) {
+			if(compare(i,index)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static void main(String args[]){

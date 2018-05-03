@@ -1,3 +1,5 @@
+package data;
+import utility.ArraySet;
 
 public class DiscreteAttribute extends Attribute{
 	private String values[];

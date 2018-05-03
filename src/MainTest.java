@@ -1,3 +1,5 @@
+import data.Data;
+import mining.KMeansMiner;
 
 public class MainTest {
 
@@ -5,6 +7,8 @@ public class MainTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		
 		
 		Data data =new Data();
 		System.out.println(data);
