@@ -1,3 +1,6 @@
+package mining;
+import data.Data;
+import data.OutOfRangeSampleSize;
 
 public class KMeansMiner {
 	private ClusterSet C;
@@ -10,7 +13,7 @@ public class KMeansMiner {
 		return C;
 	}
 
-	public int kMeans(Data data){
+	public int kMeans(Data data) throws OutOfRangeSampleSize{
 		int numberOfIterations=0;
 		//STEP 1
 		C.initializeCentroids(data);

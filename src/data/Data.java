@@ -1,14 +1,16 @@
+package data;
 import java.util.Random;
+
+import utility.ArraySet;
 
 public class Data {
 // Le visibilità di classi , attributi e metodi devono essere decise dagli studenti	
 	private Object data [][];
 	private int numberOfExamples;
 	private Attribute attributeSet[];
-	
+	private int distinctTuples;
 	
 	public Data(){
-		
 		//data
 		data = new Object [14][5];
 		// TO DO : memorizzare le transazioni secondo lo schema della tabella nelle specifiche
@@ -132,6 +134,8 @@ public class Data {
 		data[13][2]="High";
 		data[13][3]="Strong";
 		data[13][4]="No";
+		
+		distinctTuples=countDistinctTuples();
 	}
 	
 	public int getNumberOfExamples(){
@@ -162,28 +166,32 @@ public class Data {
 		return tuple;
 	}
 	
-	public int[] sampling(int k){
-		int centroidIndexes[]=new int[k];
-		//choose k random different centroids in data.
-		Random rand=new Random();
-		rand.setSeed(System.currentTimeMillis());
-		for (int i=0;i<k;i++){
-			boolean found=false;
-			int c;
-			do{
-				found=false;
-				c=rand.nextInt(getNumberOfExamples());
-				// verify that centroid[c] is not equal to a centroide
-				//already stored in CentroidIndexes
-				for(int j=0;j<i;j++)
-					if(compare(centroidIndexes[j],c)){
-						found=true;
-						break;
-					}
-				}while(found);
-			centroidIndexes[i]=c;
+	public int[] sampling(int k) throws OutOfRangeSampleSize{
+		if(k<=0 || k>distinctTuples) {
+			throw new OutOfRangeSampleSize();
+		}else {
+			int centroidIndexes[]=new int[k];
+			//choose k random different centroids in data.
+			Random rand=new Random();
+			rand.setSeed(System.currentTimeMillis());
+			for (int i=0;i<k;i++){
+				boolean found=false;
+				int c;
+				do{
+					found=false;
+					c=rand.nextInt(getNumberOfExamples());
+					// verify that centroid[c] is not equal to a centroide
+					//already stored in CentroidIndexes
+					for(int j=0;j<i;j++)
+						if(compare(centroidIndexes[j],c)){
+							found=true;
+							break;
+						}
+					}while(found);
+				centroidIndexes[i]=c;
+			}
+			return centroidIndexes;
 		}
-		return centroidIndexes;
 	}
 	
 	private boolean compare(int i,int j) {
@@ -211,6 +219,24 @@ public class Data {
 				}
 			}
 		return temp;
+	}
+	
+	private int countDistinctTuples() {
+		int cont=0;
+		for(int i=0;i<getNumberOfExamples();i++) {
+			if(!existsTupla(i)) {
+				cont++;
+			}
+		}
+		return cont;
+	}
+	
+	private boolean existsTupla(int index) {
+		for(int i=0;i<index;i++) {
+			if(compare(i,index))
+				return true;
+		}
+		return false;
 	}
 	
 	public String toString(){		

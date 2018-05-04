@@ -1,3 +1,7 @@
+package mining;
+import data.Data;
+import data.OutOfRangeSampleSize;
+import data.Tuple;
 
 public class ClusterSet {
 	private Cluster C[];
@@ -16,7 +20,7 @@ public class ClusterSet {
 		return C[i];
 	}
 	
-	public void initializeCentroids(Data data){
+	public void initializeCentroids(Data data) throws OutOfRangeSampleSize{
 		int centroidIndexes[]=data.sampling(C.length);
 		for(int i=0;i<centroidIndexes.length;i++)
 			{

@@ -1,4 +1,4 @@
-
+package data;
 public class ContinuousAttribute extends Attribute{
 	private double max;
 	private double min;

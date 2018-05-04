@@ -1,4 +1,7 @@
-
+import data.Data;
+import data.OutOfRangeSampleSize;
+import mining.KMeansMiner;
+import keyboardinput.Keyboard;
 public class MainTest {
 
 	/**
@@ -8,11 +11,25 @@ public class MainTest {
 		
 		Data data =new Data();
 		System.out.println(data);
-		int k=3;
-		KMeansMiner kmeans=new KMeansMiner(k);
-		int numIter=kmeans.kMeans(data);
-		System.out.println("Numero di Iterazione:"+numIter);
-		System.out.println(kmeans.getC().toString(data));
+		int k;
+		int numIter=0;
+		char carattere = 0;
+		do {
+			try {
+				System.out.println("Inserisci k:");
+				k=Keyboard.readInt();
+				KMeansMiner kmeans=new KMeansMiner(k);
+				numIter = kmeans.kMeans(data);
+				System.out.println("Numero di Iterazione:"+numIter);
+				System.out.println(kmeans.getC().toString(data));
+			} catch (OutOfRangeSampleSize e) {
+				// TODO Auto-generated catch block
+				e.fernando();
+			}
+			System.out.println("Vuoi ripetere l'esecuzione?(y/n)");
+			carattere=Keyboard.readChar();
+		}while(carattere!=('n'));
+		
 
 	}
 
