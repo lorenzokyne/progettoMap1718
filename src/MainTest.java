@@ -1,3 +1,5 @@
+
+
 import data.Data;
 import data.OutOfRangeSampleSize;
 import mining.KMeansMiner;
@@ -9,7 +11,7 @@ public class MainTest {
 	 */
 	public static void main(String[] args) {
 		
-		Data data =new Data();
+		Data data = new Data("playtennis");
 		System.out.println(data);
 		int k;
 		int numIter=0;
@@ -23,8 +25,7 @@ public class MainTest {
 				System.out.println("Numero di Iterazione:"+numIter);
 				System.out.println(kmeans.getC().toString(data));
 			} catch (OutOfRangeSampleSize e) {
-				// TODO Auto-generated catch block
-				e.fernando();
+				e.notValidNumber();
 			}
 			System.out.println("Vuoi ripetere l'esecuzione?(y/n)");
 			carattere=Keyboard.readChar();
