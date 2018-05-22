@@ -23,38 +23,32 @@ public class TableData {
 
 	public List<Example> getDistinctTransazioni(String table) throws SQLException, EmptySetException {
 		List<Example> temp = new ArrayList<Example>();
+		Connection conn = db.getConnection();
+		conn.isValid(10);
 		try {
-			db.initConnection();
-			Connection conn = db.getConnection();
-			conn.isValid(10);
-			try {
-				Statement s = conn.createStatement();
-				String query = "SELECT * " + "FROM " + table;
-				ResultSet res = s.executeQuery(query);
-				boolean vuoto = !res.next();
-				if (vuoto) {
-					throw new EmptySetException();
-				}
-				while (!vuoto) {
-					Example app = new Example();
-					try {
-						app.add(res.getString("outlook"));
-						app.add(res.getDouble("temperature"));
-						app.add(res.getString("umidity"));
-						app.add(res.getString("wind"));
-						app.add(res.getString("play"));
-						temp.add(app);
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-					vuoto = !res.next();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			Statement s = conn.createStatement();
+			String query = "SELECT * " + "FROM " + table;
+			ResultSet res = s.executeQuery(query);
+			boolean vuoto = !res.next();
+			if (vuoto) {
+				throw new EmptySetException();
 			}
-		} catch (DatabaseConnectionException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			while (!vuoto) {
+				Example app = new Example();
+				try {
+					app.add(res.getString("outlook"));
+					app.add(res.getDouble("temperature"));
+					app.add(res.getString("umidity"));
+					app.add(res.getString("wind"));
+					app.add(res.getString("play"));
+					temp.add(app);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				vuoto = !res.next();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return temp;

@@ -41,8 +41,8 @@ public class Data {
 	private List<Attribute> explanatorySet;
 
 	public Data(String table) {
-		/*// data
-		TreeSet<Example> tempData = new TreeSet<Example>();
+		// data
+		//TreeSet<Example> tempData = new TreeSet<Example>();
 		explanatorySet = new LinkedList<Attribute>();
 		// TO DO : memorizzare le transazioni secondo lo schema della tabella nelle
 		// specifiche
@@ -79,7 +79,7 @@ public class Data {
 		explanatorySet.add(new DiscreteAttribute<String>("PlayTennis", 4, playTennisValues));
 
 		// similmente per gli altri attributi
-
+/*
 		Example ex0 = new Example();
 		Example ex1 = new Example();
 		Example ex2 = new Example();
@@ -193,12 +193,12 @@ public class Data {
 		tempData.add(ex11);
 		tempData.add(ex12);
 		tempData.add(ex13);
-		data = new ArrayList<Example>(tempData);
-		numberOfExamples = data.size();*/
+		data = new ArrayList<Example>(tempData);*/
 		DbAccess db=new DbAccess();
 		TableData t= new TableData(db);
 		try {
 			data=t.getDistinctTransazioni(table);
+			numberOfExamples = data.size();
 		} catch (SQLException | EmptySetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
