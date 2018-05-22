@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbAccess {
-	private String DRIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
+	private String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
 	private final String DBMS = "jdbc:mysql";
 	private final String SERVER = "localhost";
 	private final String DATABASE = "mapdb";
 	private final String PORT = "3306";
-	private final String USER_ID = "mapuser";
+	private final String USER_ID = "MapUser";
 	private final String PASSWORD = "map";
 	private Connection conn;
 
@@ -18,10 +18,10 @@ public class DbAccess {
 		try {
 			Class.forName(DRIVER_CLASS_NAME).newInstance();
 			String temp = DBMS + "://" + SERVER + ":" + PORT + "/" + DATABASE;
-			temp+="?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+			temp += "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 			try {
 				conn = DriverManager.getConnection(temp, USER_ID, PASSWORD);
-				//closeConnection();
+				// closeConnection();
 			} catch (SQLException e) {
 				e.printStackTrace();
 				throw new DatabaseConnectionException();
