@@ -13,26 +13,12 @@ import database.DatabaseConnectionException;
 import database.DbAccess;
 import database.EmptySetException;
 import database.Example;
+import database.NoValueException;
+import database.QUERY_TYPE;
 import database.TableData;
+import database.TableSchema;
 
 public class Data {
-	/*
-	 * public class Example implements Comparable<Example> { private List<Object>
-	 * example = new ArrayList<Object>();
-	 * 
-	 * public void add(Object o) { example.add(o); }
-	 * 
-	 * public Object get(int i) { return example.get(i); }
-	 * 
-	 * @Override public int compareTo(Example ex) { for (int i = 0; i <
-	 * example.size(); i++) { if (!get(i).equals(ex.get(i))) { return ((Comparable)
-	 * example.get(i)).compareTo(ex.get(i)); } } return 0; }
-	 * 
-	 * public String toString() { String temp = new String(); for (Object s :
-	 * example) temp += s.toString(); return temp; }
-	 * 
-	 * }
-	 */
 
 	// Le visibilità di classi , attributi e metodi devono essere decise dagli
 	// studenti
@@ -42,7 +28,7 @@ public class Data {
 
 	public Data(String table) {
 		// data
-		//TreeSet<Example> tempData = new TreeSet<Example>();
+		// TreeSet<Example> tempData = new TreeSet<Example>();
 		explanatorySet = new LinkedList<Attribute>();
 		// TO DO : memorizzare le transazioni secondo lo schema della tabella nelle
 		// specifiche
@@ -54,156 +40,73 @@ public class Data {
 		TreeSet<String> humidityValues = new TreeSet<String>();
 		TreeSet<String> windValues = new TreeSet<String>();
 		TreeSet<String> playTennisValues = new TreeSet<String>();
-		windValues.add("Weak");
-		windValues.add("Strong");
-		playTennisValues.add("No");
-		playTennisValues.add("Yes");
-		humidityValues.add("Normal");
-		humidityValues.add("High");
-		temperatureValues.add("Cool");
-		temperatureValues.add("Mild");
-		temperatureValues.add("Hot");
-		outLookValues.add("Overcast");
-		outLookValues.add("Rain");
-		outLookValues.add("Sunny");
+		windValues.add("weak");
+		windValues.add("strong");
+		playTennisValues.add("no");
+		playTennisValues.add("yes");
+		humidityValues.add("normal");
+		humidityValues.add("high");
+		temperatureValues.add("cool");
+		temperatureValues.add("mild");
+		temperatureValues.add("hot");
+		outLookValues.add("overcast");
+		outLookValues.add("rain");
+		outLookValues.add("sunny");
 
 		// TO DO : avvalorare ciascune elemento di explanatorySet con un oggetto della
 		// classe DiscreteAttribute che modella il corrispondente attributo (e.g.
 		// outlook, temperature,etc)
 		// nel seguito si fornisce l'esempio per outlook
-
-		explanatorySet.add(new DiscreteAttribute<String>("Outlook", 0, outLookValues));
-		explanatorySet.add(new ContinuousAttribute("Temperature", 1, 3.2, 38.7));
-		explanatorySet.add(new DiscreteAttribute<String>("Humidity", 2, humidityValues));
-		explanatorySet.add(new DiscreteAttribute<String>("Wind", 3, windValues));
-		explanatorySet.add(new DiscreteAttribute<String>("PlayTennis", 4, playTennisValues));
-
+		/*
+		 * explanatorySet.add(new DiscreteAttribute<String>("Outlook", 0,
+		 * outLookValues)); explanatorySet.add(new ContinuousAttribute("Temperature", 1,
+		 * 3.2, 38.7)); explanatorySet.add(new DiscreteAttribute<String>("Humidity", 2,
+		 * humidityValues)); explanatorySet.add(new DiscreteAttribute<String>("Wind", 3,
+		 * windValues)); explanatorySet.add(new DiscreteAttribute<String>("PlayTennis",
+		 * 4, playTennisValues));
+		 */
 		// similmente per gli altri attributi
-/*
-		Example ex0 = new Example();
-		Example ex1 = new Example();
-		Example ex2 = new Example();
-		Example ex3 = new Example();
-		Example ex4 = new Example();
-		Example ex5 = new Example();
-		Example ex6 = new Example();
-		Example ex7 = new Example();
-		Example ex8 = new Example();
-		Example ex9 = new Example();
-		Example ex10 = new Example();
-		Example ex11 = new Example();
-		Example ex12 = new Example();
-		Example ex13 = new Example();
-
-		ex0.add(new String("Sunny"));
-		ex0.add(new Double(37.5));
-		ex0.add(new String("High"));
-		ex0.add(new String("Weak"));
-		ex0.add(new String("No"));
-
-		ex1.add(new String("Sunny"));
-		ex1.add(new Double(38.7));
-		ex1.add(new String("High"));
-		ex1.add(new String("Strong"));
-		ex1.add(new String("No"));
-
-		ex2.add(new String("Overcast"));
-		ex2.add(new Double(37.5));
-		ex2.add(new String("High"));
-		ex2.add(new String("Weak"));
-		ex2.add(new String("Yes"));
-
-		ex3.add(new String("Rain"));
-		ex3.add(new Double(20.5));
-		ex3.add(new String("High"));
-		ex3.add(new String("Weak"));
-		ex3.add(new String("Yes"));
-
-		ex4.add(new String("Rain"));
-		ex4.add(new Double(20.7));
-		ex4.add(new String("Normal"));
-		ex4.add(new String("Weak"));
-		ex4.add(new String("Yes"));
-
-		ex5.add(new String("Rain"));
-		ex5.add(new Double(21.2));
-		ex5.add(new String("Normal"));
-		ex5.add(new String("Strong"));
-		ex5.add(new String("No"));
-
-		ex6.add(new String("Overcast"));
-		ex6.add(new Double(20.5));
-		ex6.add(new String("Normal"));
-		ex6.add(new String("Strong"));
-		ex6.add(new String("Yes"));
-
-		ex7.add(new String("Sunny"));
-		ex7.add(new Double(21.2));
-		ex7.add(new String("High"));
-		ex7.add(new String("Weak"));
-		ex7.add(new String("No"));
-
-		ex8.add(new String("Sunny"));
-		ex8.add(new Double(21.2));
-		ex8.add(new String("Normal"));
-		ex8.add(new String("Weak"));
-		ex8.add(new String("Yes"));
-
-		ex9.add(new String("Rain"));
-		ex9.add(new Double(19.8));
-		ex9.add(new String("Normal"));
-		ex9.add(new String("Weak"));
-		ex9.add(new String("Yes"));
-
-		ex10.add(new String("Sunny"));
-		ex10.add(new Double(3.5));
-		ex10.add(new String("Normal"));
-		ex10.add(new String("Strong"));
-		ex10.add(new String("Yes"));
-
-		ex11.add(new String("Overcast"));
-		ex11.add(new Double(3.6));
-		ex11.add(new String("High"));
-		ex11.add(new String("Strong"));
-		ex11.add(new String("Yes"));
-
-		ex12.add(new String("Overcast"));
-		ex12.add(new Double(3.5));
-		ex12.add(new String("Normal"));
-		ex12.add(new String("Weak"));
-		ex12.add(new String("Yes"));
-
-		ex13.add(new String("Rain"));
-		ex13.add(new Double(3.2));
-		ex13.add(new String("High"));
-		ex13.add(new String("Strong"));
-		ex13.add(new String("No"));
-
-		tempData.add(ex0);
-		tempData.add(ex1);
-		tempData.add(ex2);
-		tempData.add(ex3);
-		tempData.add(ex4);
-		tempData.add(ex5);
-		tempData.add(ex6);
-		tempData.add(ex7);
-		tempData.add(ex8);
-		tempData.add(ex9);
-		tempData.add(ex10);
-		tempData.add(ex11);
-		tempData.add(ex12);
-		tempData.add(ex13);
-		data = new ArrayList<Example>(tempData);*/
-		DbAccess db=new DbAccess();
-		TableData t= new TableData(db);
+		DbAccess db = new DbAccess();
 		try {
-			data=t.getDistinctTransazioni(table);
+			TableSchema tb = new TableSchema(db, table);
+			TableData t = new TableData(db);
+			for (int i = 0; i < tb.getNumberOfAttributes(); i++) {
+				String nomecol = tb.getColumn(i).getColumnName().toLowerCase();
+				if (tb.getColumn(i).isNumber()) {
+					QUERY_TYPE min, max;
+					min = QUERY_TYPE.MIN;
+					max = QUERY_TYPE.MAX;
+					double valmin = (double) t.getAggregateColumnValue(table, tb.getColumn(i), min);
+					double valmax = (double) t.getAggregateColumnValue(table, tb.getColumn(i), max);
+					explanatorySet.add(new ContinuousAttribute(nomecol, i, valmin, valmax));
+				} else {
+					explanatorySet.add(new DiscreteAttribute<String>(nomecol, i,
+							(TreeSet) t.getDistinctColumnValues(table, tb.getColumn(i))));
+				}
+
+				/*
+				 * Attribute a = explanatorySet.get(i); if
+				 * (a.getClass().getName().equals("data.DiscreteAttribute")) { Iterator iter =
+				 * ((DiscreteAttribute) a).iterator(); while (iter.hasNext()) {
+				 * System.out.println(iter.next()); } } else { ContinuousAttribute prova =
+				 * (ContinuousAttribute) a; prova.getminmax(); }
+				 */
+
+			}
+			data = t.getDistinctTransazioni(table);
 			numberOfExamples = data.size();
-		} catch (SQLException | EmptySetException e) {
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoValueException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EmptySetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	public int getNumberOfExamples() {
 		return numberOfExamples;
 	}
@@ -296,7 +199,6 @@ public class Data {
 				temp = (String) s;
 			}
 		}
-		System.out.println(temp);
 		return temp;
 	}
 
@@ -312,8 +214,11 @@ public class Data {
 	}
 
 	public String toString() {
-		String appoggio = getAttribute(0) + "," + getAttribute(1) + "," + getAttribute(2) + "," + getAttribute(3) + ","
-				+ getAttribute(4) + "\n";
+		String appoggio = "";
+		for (int i = 0; i < getNumberOfAttributes(); i++) {
+			appoggio += getAttribute(i) + ",";
+		}
+		appoggio = appoggio + "\n";
 		for (int i = 0; i < getNumberOfExamples(); i++) {
 			appoggio = appoggio + (i + 1) + ":";
 			for (int j = 0; j < getNumberOfAttributes(); j++) {
@@ -325,7 +230,7 @@ public class Data {
 	}
 
 	public static void main(String args[]) {
-		Data trainingSet = new Data("playtennis");
+		Data trainingSet = new Data("prova");
 		System.out.println(trainingSet);
 	}
 }

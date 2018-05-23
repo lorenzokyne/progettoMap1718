@@ -53,16 +53,12 @@ public class TableSchema {
 		Connection con = db.getConnection();
 		DatabaseMetaData meta = con.getMetaData();
 		ResultSet res = meta.getColumns(null, null, tableName, null);
-
 		while (res.next()) {
-
 			if (mapSQL_JAVATypes.containsKey(res.getString("TYPE_NAME")))
 				tableSchema.add(
 						new Column(res.getString("COLUMN_NAME"), mapSQL_JAVATypes.get(res.getString("TYPE_NAME"))));
-
 		}
 		res.close();
-
 	}
 
 	public int getNumberOfAttributes() {
@@ -73,4 +69,16 @@ public class TableSchema {
 		return tableSchema.get(index);
 	}
 
+	public static void main(String[] args) {
+		DbAccess db = new DbAccess();
+		try {
+			TableSchema tb = new TableSchema(db, "prova");
+			for (int i = 0; i < tb.getNumberOfAttributes(); i++) {
+				System.out.println(tb.getColumn(i));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -1,6 +1,7 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import data.DiscreteAttribute;
 import database.TableSchema.Column;
 
 public class TableData {
@@ -24,27 +26,34 @@ public class TableData {
 	public List<Example> getDistinctTransazioni(String table) throws SQLException, EmptySetException {
 		List<Example> temp = new ArrayList<Example>();
 		Connection conn = db.getConnection();
+		DatabaseMetaData meta = conn.getMetaData();
 		try {
 			Statement s = conn.createStatement();
 			String query = "SELECT * " + "FROM " + table;
 			ResultSet res = s.executeQuery(query);
-			boolean vuoto = !res.next();
-			if (vuoto) {
+			boolean pieno = res.next();
+			if (!pieno) {
 				throw new EmptySetException();
 			}
-			while (!vuoto) {
+			while (pieno) {
+				TableSchema tb = new TableSchema(db, table);
 				Example app = new Example();
 				try {
-					app.add(res.getString("outlook"));
-					app.add(res.getDouble("temperature"));
-					app.add(res.getString("umidity"));
-					app.add(res.getString("wind"));
-					app.add(res.getString("play"));
+					for (int i = 0; i < tb.getNumberOfAttributes(); i++) {
+						Object obj;
+						if (tb.getColumn(i).isNumber()) {
+							obj = (res.getDouble(tb.getColumn(i).getColumnName()));
+						} else {
+							obj = (res.getString(tb.getColumn(i).getColumnName()));
+						}
+						// System.out.println(obj.getClass().getName());
+						app.add(obj);
+					}
 					temp.add(app);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				vuoto = !res.next();
+				pieno = res.next();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -60,7 +69,6 @@ public class TableData {
 		ResultSet res = s.executeQuery(query);
 		while (res.next()) {
 			if (column.isNumber()) {
-
 				temp.add(res.getDouble(column.getColumnName()));
 			} else {
 				temp.add(res.getString(column.getColumnName()));
@@ -71,16 +79,17 @@ public class TableData {
 
 	public Object getAggregateColumnValue(String table, Column column, QUERY_TYPE aggregate)
 			throws SQLException, NoValueException {
-		Object temp = null;
+		Double temp = null;
 		try {
 			db.initConnection();
 			Connection conn = db.getConnection();
 			conn.isValid(10);
 			Statement s = conn.createStatement();
-			String query = "SELECT " + aggregate.toString() + "(" + column.getColumnName() + ") FROM " + table;
+			String query = "SELECT " + aggregate.toString() + "(" + column.getColumnName() + ")as "
+					+ column.getColumnName() + " FROM " + table;
 			ResultSet res = s.executeQuery(query);
 			if (res.next()) {
-				return res.getString(1);
+				temp = res.getDouble(column.getColumnName());
 			} else {
 				throw new NoValueException();
 			}
